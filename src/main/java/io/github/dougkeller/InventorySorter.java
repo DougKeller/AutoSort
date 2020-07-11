@@ -28,23 +28,24 @@ public class InventorySorter {
 			if (a == null) {
 				continue;
 			}
-			
+
 			for(int j = i + 1; j < contents.length; j++) {
 				ItemStack b = contents[j];
 				if (b == null || !isSameItem(a, b)) {
 					continue;
 				}
-				
+
 				int maxStackSize = a.getMaxStackSize();
 				int aAmount = a.getAmount();
 				if (aAmount >= maxStackSize) {
 					continue;
 				}
-				
+
 				int bAmount = b.getAmount();
 				int amountToCombine = Math.min(maxStackSize - aAmount, bAmount);
 				a.setAmount(aAmount + amountToCombine);
 				b.setAmount(bAmount - amountToCombine);
+
 				if (b.getAmount() == 0) {
 					contents[j] = null;
 				}
@@ -54,10 +55,12 @@ public class InventorySorter {
 		return contents;
 	}
 	
-	private boolean isSameItem(ItemStack a, ItemStack b) 
-	{
-		return a.getType() == b.getType()
-			   && a.getDurability() == b.getDurability();
+	private boolean isSameItem(ItemStack a, ItemStack b) {
+		if (a.getType() != b.getType()) {
+			return false;
+		}
+		
+		return a.getItemMeta().equals(b.getItemMeta());
 	}
 	
 	private ItemStack[] sortContents(ItemStack[] contents) {

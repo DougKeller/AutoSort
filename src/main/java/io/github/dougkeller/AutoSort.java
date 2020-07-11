@@ -21,7 +21,10 @@ public class AutoSort extends JavaPlugin implements Listener {
 	
 	@EventHandler
 	public void onInventoryOpen(InventoryOpenEvent event) {
-		Inventory inventory = event.getInventory();
+		sortIfChestInventory(event.getInventory());
+	}
+	
+	public void sortIfChestInventory(Inventory inventory) {
 		if (inventory.getType() != InventoryType.CHEST) {
 			return;
 		}

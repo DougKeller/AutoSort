@@ -17,20 +17,17 @@ public class ItemStackComparator implements Comparator<ItemStack> {
 			return -1;
 
 		Material aType = a.getType(), bType = b.getType();
-
-		if(aType == bType) {
-			short aDamage = a.getDurability(), bDamage = b.getDurability();
-
-			if(aDamage == bDamage) {
-				int aAmount = a.getAmount(), bAmount = b.getAmount();
-				return bAmount - aAmount;
-			} else {
-				return aDamage - bDamage;
-			}
-
-		} else {
+		if (aType != bType) {
 			return aType.compareTo(bType);
 		}
+		
+		short aDamage = a.getDurability(), bDamage = b.getDurability();
+		if (aDamage != bDamage) {
+			return aDamage - bDamage;
+		}
+
+		int aAmount = a.getAmount(), bAmount = b.getAmount();
+		return bAmount - aAmount;
 	}
 
 }
